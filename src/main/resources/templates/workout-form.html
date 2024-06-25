@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title th:if="${workout.id}">Edit Workout</title>
+    <title th:unless="${workout.id}">Create Workout</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f0f8ff;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+            color: #333;
+        }
+        h1 {
+            color: #4682b4;
+            margin-bottom: 30px;
+        }
+        form {
+            width: 80%;
+            max-width: 600px;
+            background: white;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            margin-top: 20px;
+        }
+        div {
+            margin-bottom: 15px;
+        }
+        label {
+            display: block;
+            margin-bottom: 5px;
+            color: #333;
+        }
+        input[type="text"], input[type="number"], select {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            box-sizing: border-box;
+        }
+        button {
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            background-color: #4682b4;
+            color: white;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+        button:hover {
+            background-color: #5a9bd4;
+        }
+        a {
+            display: block;
+            margin-top: 20px;
+            color: #4682b4;
+            text-decoration: none;
+            transition: color 0.3s ease;
+        }
+        a:hover {
+            color: #5a9bd4;
+        }
+    </style>
+</head>
+<body>
+    <h1 th:if="${workout.id}">Edit Workout</h1>
+    <h1 th:unless="${workout.id}">Create Workout</h1>
+    <form th:action="@{/workouts}" th:object="${workout}" method="post">
+        <input type="hidden" th:field="*{id}" />
+        <div>
+            <label>Name:</label>
+            <input type="text" th:field="*{name}" />
+        </div>
+        <div>
+            <label>Type:</label>
+            <input type="text" th:field="*{type}" />
+        </div>
+        <div>
+            <label>Duration (minutes):</label>
+            <input type="number" th:field="*{duration}" />
+        </div>
+        <div>
+            <label>User:</label>
+            <select th:field="*{user}">
+                <option th:each="user : ${users}" th:value="${user}" th:text="${user.name}"></option>
+            </select>
+        </div>
+        <div>
+            <button type="submit">Save</button>
+        </div>
+    </form>
+    <a href="/workouts">Back to List</a>
+</body>
+</html>
